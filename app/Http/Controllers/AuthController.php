@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\Passport;
 class AuthController extends Controller
 {
     public function __construct(){
@@ -31,6 +32,7 @@ class AuthController extends Controller
             'user'=>$user
         ], 201);
     }
+
     public function login(Request $request){
         $validator = Validator::make($request->all(),[
             'email' => 'required|email',
@@ -43,15 +45,33 @@ class AuthController extends Controller
             return response()->json(['error'=>'Unauthorized'], 401);
         }
         return $this->createNewToken($token);
+        //return $token;
     }
+
     public function createNewToken($token){
-        return response()->json([
-            'access_token'=>$token,
-            // 'token_type'=> 'bearer',
-            // //'expires_in'=>auth()->factory()->getTTL()*60, 
-            // 'user'=>auth()->user()
-        ]);
+        try {
+            $guardConfig = config('auth.defaults.guard');
+            $ttl = config("auth.guards.$guardConfig.expiration") * 60;
+            return response()->json([
+                'accessToken'=> $token,
+                'token_type'=> 'Bearer',
+                'expires_in'=> $ttl,
+            ]);
+        } catch (\Exception $e) {
+            // Handle the error by logging it or returning an error response
+            logger()->error('Error creating new token: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to create new token'], 500);
+        }
     }
+    
+    // public function refresh($token)
+    // {
+    //     return response()->json([
+    //         'refreshToken'=> $token,
+    //         'token_type'=> 'Bearer'
+    //     ]);
+    // }
+
     public function profile(){
         return response()->json(auth()->user());
     }
