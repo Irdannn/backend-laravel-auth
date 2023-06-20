@@ -32,6 +32,7 @@ class UserProfileController extends Controller
             'noHp' => $request->noHp,
             'role' => $request->role,
             'email' => $request->email,
+            'bio' => $request->bio
         ]);
 
         if ($request->has('id_user')) {
@@ -60,7 +61,8 @@ class UserProfileController extends Controller
             'penghasilan' => 'nullable',
             'noHp' => 'nullable',
             'role' => 'nullable',
-            'email' => 'nullable'
+            'email' => 'nullable',
+            'bio' => 'nullable'
         ]);
         $userProfile = UserProfile::find($id);
         if (!$userProfile) {
@@ -78,6 +80,7 @@ class UserProfileController extends Controller
         $userProfile->noHp = $request->input('noHp');
         $userProfile->role = $request->input('role');
         $userProfile->email = $request->input('email');
+        $userProfile->bio = $request->input('bio');
         $userProfile->save();
 
         if ($request->has('id_user')) {

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('noHp')->nullable();
             $table->string('role')->nullable();
             $table->string('email')->nullable();
+            $table->string('bio')->nullable();
             $table->timestamps();
         });
     }

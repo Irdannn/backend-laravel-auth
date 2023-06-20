@@ -19,6 +19,7 @@ class UserProfile extends Model
         'noHp',
         'role',
         'email',
+        'bio'
     ];
 
     public function user()
