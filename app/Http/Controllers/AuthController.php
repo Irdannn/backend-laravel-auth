@@ -15,6 +15,7 @@ class AuthController extends Controller
     }
     public function register(Request $request){
         $validator = Validator::make($request->all(),[
+            'username' => 'required',
             'name' => 'required',
             'role' => 'required',
             'email' => 'required|string|email',
@@ -34,8 +35,9 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
+        
         $validator = Validator::make($request->all(),[
-            'email' => 'required|email',
+            'email' => 'required|string',
             'password'=>'required|string|min:6'
         ]);
         if($validator->fails()){

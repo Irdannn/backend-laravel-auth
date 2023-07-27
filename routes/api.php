@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserProfileController;
-use App\Models\UserProfile;
+use App\Http\Controllers\FotoProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +27,17 @@ Route::group(['middleware' => 'api', 'prefix'=> 'auth'], function($router){
 });
 
 Route::group(['middleware' => 'api', 'prefix'=> 'user'], function($router){
-    Route::post('/store', [UserProfileController::class, 'store']);
     Route::get('/show/{id}', [UserProfileController::class, 'show']);
     Route::get('/index', [UserProfileController::class, 'index']);
     Route::put('/update/{id}', [UserProfileController::class, 'update']);
     Route::delete('/destroy/{id}', [UserProfileController::class, 'destroy']);
+});
+
+Route::group(['middleware' => 'api', 'prefix'=> 'foto'], function($router){
+    Route::post('/store', [FotoProfileController::class, 'store']);
+    Route::get('/show/{id}/image_path', [FotoProfileController::class, 'show']);
+    Route::get('/index', [FotoProfileController::class, 'index']);
+    Route::put('/update/{id}', [FotoProfileController::class, 'update']);
+    Route::delete('/destroy/{id}', [FotoProfileController::class, 'destroy']);
 });
 

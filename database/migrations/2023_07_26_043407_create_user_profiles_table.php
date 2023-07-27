@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('username')->unique();
             $table->string('name')->nullable();
             $table->string('alamat')->nullable();
             $table->string('tempatLahir')->nullable();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->string('role')->nullable();
             $table->string('email')->nullable();
             $table->string('bio')->nullable();
+
             $table->timestamps();
         });
     }

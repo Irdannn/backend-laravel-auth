@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class UserProfile extends Model
 {
     protected $fillable = [
-        'id_user',
+        'user_id',
+        'username',
         'name',
         'alamat',
         'tempatLahir',
@@ -19,12 +20,11 @@ class UserProfile extends Model
         'noHp',
         'role',
         'email',
-        'bio'
+        'bio',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
-use libphonenumber\PhoneNumberUtil;
-use libphonenumber\PhoneNumberFormat;
-use libphonenumber\PhoneNumberType;
 
 
 class UserProfileController extends Controller
@@ -17,32 +14,6 @@ class UserProfileController extends Controller
         $userProfile = UserProfile::all()->toArray();
        return $userProfile;
     }
-
-    public function store(Request $request)
-    {
-        $userProfile = UserProfile::create([
-            'id_user' => $request->id_user,
-            'name' => $request->name,
-            'alamat' => $request->alamat,
-            'tempatLahir' => $request->tempatLahir,
-            'tanggalLahir' => $request->tanggalLahir,
-            'pendidikanTerakhir' => $request->pendidikanTerakhir,
-            'pekerjaan' => $request->pekerjaan,
-            'penghasilan' => $request->penghasilan,
-            'noHp' => $request->noHp,
-            'role' => $request->role,
-            'email' => $request->email,
-            'bio' => $request->bio
-        ]);
-
-        if ($request->has('id_user')) {
-            $user = User::find($request->input('id_user'));
-            $user->update(['name' => $request->input('name')]);
-            $user->update(['role' => $request->input('role')]);
-            $user->update(['email' => $request->input('email')]);
-        }
-        return $userProfile;
-    }
     public function show($id)
     {
         return UserProfile::find($id);
@@ -51,7 +22,8 @@ class UserProfileController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_user' => 'required',
+            'user_id' => 'required',
+            'username' => 'required',
             'name' => 'required',
             'alamat' => 'nullable',
             'tempatLahir' => 'nullable',
@@ -64,12 +36,14 @@ class UserProfileController extends Controller
             'email' => 'nullable',
             'bio' => 'nullable'
         ]);
+
         $userProfile = UserProfile::find($id);
         if (!$userProfile) {
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        $userProfile->id_user = $request->input('id_user');
+        $userProfile->user_id = $request->input('user_id');
+        $userProfile->username = $request->input('username');
         $userProfile->name = $request->input('name');
         $userProfile->alamat = $request->input('alamat');
         $userProfile->tempatLahir = $request->input('tempatLahir');
@@ -83,8 +57,9 @@ class UserProfileController extends Controller
         $userProfile->bio = $request->input('bio');
         $userProfile->save();
 
-        if ($request->has('id_user')) {
-            $user = User::find($request->input('id_user'));
+        if ($request->has('user_id')) {
+            $user = User::find($request->input('user_id'));
+            $user->update(['username' => $request->input('username')]);
             $user->update(['name' => $request->input('name')]);
             $user->update(['role' => $request->input('role')]);
             $user->update(['email' => $request->input('email')]);
