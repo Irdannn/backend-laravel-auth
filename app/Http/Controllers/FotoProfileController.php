@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\FotoProfile;
-use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +17,7 @@ class FotoProfileController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'id_user' => 'required',
+            'user_id' => 'required',
             'image_path' => 'required|mimes:jpeg,png|max:5000'
         ]);
 
@@ -26,7 +25,7 @@ class FotoProfileController extends Controller
 
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('pubic/pictures');
-            $fotoProfile->id_user = $request->input('id_user');
+            $fotoProfile->user_id = $request->input('user_id');
             $fotoProfile->image_path = Storage::url($imagePath);
             $fotoProfile->save();
 
