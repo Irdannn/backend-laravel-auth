@@ -8,9 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Str;
+use App\Traits\UUID;
 
 class User extends Authenticatable implements JWTSubject
 {
+    protected $primaryKey = 'uuid';
+    public $incrementing = false; // Set to false to indicate that the primary key is not auto-incrementing
+
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
@@ -38,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-        'id'              => $this->id,
+        'uuid'            => $this->uuid,
         'username'        => $this->username,
         'name'            => $this->name,
         'email'           => $this->email,
@@ -55,6 +60,10 @@ class User extends Authenticatable implements JWTSubject
     protected static function boot()
     {
         parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
 
         self::created(function ($user) {
             $user->profile()->create([

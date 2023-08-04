@@ -14,6 +14,7 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' =>  ['login', 'register']]);
     }
     public function register(Request $request){
+
         $validator = Validator::make($request->all(),[
             'username' => 'required',
             'name' => 'required',

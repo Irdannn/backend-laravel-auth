@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\FotoProfileController;
 
 
 /*
@@ -27,17 +27,17 @@ Route::group(['middleware' => 'api', 'prefix'=> 'auth'], function($router){
 });
 
 Route::group(['middleware' => 'api', 'prefix'=> 'user'], function($router){
-    Route::get('/show/{id}', [UserProfileController::class, 'show']);
+    Route::get('/show/{uuid}', [UserProfileController::class, 'show']);
     Route::get('/index', [UserProfileController::class, 'index']);
-    Route::put('/update/{id}', [UserProfileController::class, 'update']);
-    Route::delete('/destroy/{id}', [UserProfileController::class, 'destroy']);
+    Route::put('/update/{uuid}', [UserProfileController::class, 'update']);
+    Route::delete('/destroy/{uuid}', [UserProfileController::class, 'destroy']);
 });
 
 Route::group(['middleware' => 'api', 'prefix'=> 'foto'], function($router){
-    Route::post('/store', [FotoProfileController::class, 'store']);
-    Route::get('/show/{id}/image_path', [FotoProfileController::class, 'show']);
-    Route::get('/index', [FotoProfileController::class, 'index']);
-    Route::put('/update/{id}', [FotoProfileController::class, 'update']);
-    Route::delete('/destroy/{id}', [FotoProfileController::class, 'destroy']);
+    Route::post('/create',[AvatarController::class,'create']);
+    Route::get('/get',[AvatarController::class,'get']);
+    Route::get('/show/{uuid}/image',[AvatarController::class,'show']);
+    Route::patch('/edit/{uuid}',[AvatarController::class,'edit']);
+    Route::put('/update/{uuid}',[AvatarController::class,'update']);
+    Route::delete('/delete/{uuid}',[AvatarController::class,'delete']);
 });
-
