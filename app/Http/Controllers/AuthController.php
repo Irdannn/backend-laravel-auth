@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -73,6 +74,13 @@ class AuthController extends Controller
     //         'refreshToken'=> $token,
     //         'token_type'=> 'Bearer'
     //     ]);
+    // }
+
+    // public function getUserProfile($user_id){
+    //     $userProfile = UserProfile::find($user_id);
+    //     $user = $userProfile->user;
+
+    //     return $user;
     // }
 
     public function profile(){

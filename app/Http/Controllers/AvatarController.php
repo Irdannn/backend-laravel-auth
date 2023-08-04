@@ -11,23 +11,23 @@ class AvatarController extends Controller
 {
     public function create(Request $request)
     {
-        $images=new Avatar();
+        $avatars=new Avatar();
         $request->validate([
-            'user_uuid'=>'required',
-            'image'=>'required|max:1024'
+            'user_id'=>'required',
+            'avatar'=>'required|max:1024'
         ]);
 
         $filename="";
-        if($request->hasFile('image')){
-            $filename=$request->file('image')->store('pubic/pictures');
-            $images->image = Storage::url($filename);
+        if($request->hasFile('avatar')){
+            $filename=$request->file('avatar')->store('pubic/pictures');
+            $avatars->avatar = Storage::url($filename);
         }else{
             $filename=Null;
         }
 
-        $images->user_uuid=$request->user_uuid;
-        $images->image=$filename;
-        $result=$images->save();
+        $avatars->user_id=$request->user_id;
+        $avatars->avatar=$filename;
+        $result=$avatars->save();
         if($result){
             return response()->json(['success'=>true]);
         }else{
@@ -36,12 +36,12 @@ class AvatarController extends Controller
         
     }
 
-    public function show($uuid)
+    public function show($id)
     {
-        $imagePath = Avatar::findOrFail($uuid);
+        $avatarPath = Avatar::findOrFail($id);
 
-    if ($imagePath->image) {
-        $storagePath = str_replace('storage/', '', $imagePath->image);
+    if ($avatarPath->avatar) {
+        $storagePath = str_replace('storage/', '', $avatarPath->avatar);
         $filePath = storage_path('app/' . $storagePath);
 
         if (file_exists($filePath)) {
@@ -51,26 +51,26 @@ class AvatarController extends Controller
     return response()->json(['error' => 'Picture not found'], 404);
     }
 
-    public function update(Request $request, $uuid)
+    public function update(Request $request, $id)
     {
-        $images=Avatar::findOrFail($uuid);
+        $avatars=Avatar::findOrFail($id);
         
-        $destination=public_path("storage\\".$images->image);
+        $destination=public_path("storage\\".$avatars->avatar);
         $filename="";
-        if($request->hasFile('new_image')){
+        if($request->hasFile('new_avatar')){
             if(File::exists($destination)){
                 File::delete($destination);
             }
 
-            $filename=$request->file('new_image')->store('pubic/pictures');
-            $images->image = Storage::url($filename);
+            $filename=$request->file('new_avatar')->store('pubic/pictures');
+            $avatars->avatar = Storage::url($filename);
         }else{
-            $filename=$request->image;
+            $filename=$request->avatar;
         }
 
-        $images->user_uuid=$request->user_uuid;
-        $images->image=$filename;
-        $result=$images->save();
+        $avatars->user_id=$request->user_id;
+        $avatars->avatar=$filename;
+        $result=$avatars->save();
         if($result){
             return response()->json(['success'=>true]);
         }else{
@@ -81,12 +81,12 @@ class AvatarController extends Controller
 
     public function delete($uuid)
     {
-        $images=Avatar::findOrFail($uuid);
-        $destination=public_path("storage\\".$images->image);
+        $avatars=Avatar::findOrFail($uuid);
+        $destination=public_path("storage\\".$avatars->avatar);
         if(File::exists($destination)){
             File::delete($destination);
         }
-        $result=$images->delete();
+        $result=$avatars->delete();
         if($result){
             return response()->json(['success'=>true]);
         }else{
@@ -96,13 +96,13 @@ class AvatarController extends Controller
 
     public function get()
     {
-        $images=Avatar::orderBy('uuid','DESC')->get();
-        return response()->json($images);
+        $avatars=Avatar::orderBy('uuid','DESC')->get();
+        return response()->json($avatars);
     }
 
     public function edit($uuid)
     {
-        $images=Avatar::findOrFail($uuid);
-        return response()->json($images);
+        $avatars=Avatar::findOrFail($uuid);
+        return response()->json($avatars);
     }
 }

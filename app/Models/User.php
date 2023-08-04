@@ -43,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-        'uuid'            => $this->uuid,
+        'id'              => $this->id,
         'username'        => $this->username,
         'name'            => $this->name,
         'email'           => $this->email,
@@ -54,6 +54,11 @@ class User extends Authenticatable implements JWTSubject
     public function profile()
     {
         return $this->hasOne(UserProfile::class);
+    }
+
+    public function userProfile()
+    {
+        return $this->hasMany(UserProfile::class, 'user_id', 'id');
     }
 
     // Method to create a user profile when a user is registered

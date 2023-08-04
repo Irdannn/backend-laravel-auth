@@ -19,6 +19,13 @@ class UserProfileController extends Controller
         return UserProfile::find($id);
     }
 
+    public function showUser($user_id){
+        $user = User::find($user_id);
+        $userProfile = $user->userProfile[0];
+
+        return $userProfile;
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([
