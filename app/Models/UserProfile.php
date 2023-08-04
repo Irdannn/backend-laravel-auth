@@ -8,10 +8,10 @@ use Illuminate\Support\Str;
 
 class UserProfile extends Model
 {
-    protected $primaryKey = 'uuid';
+    protected $primaryKey = 'id';
     public $incrementing = false; // Set to false to indicate that the primary key is not auto-incrementing
     protected $fillable = [
-        'user_uuid',
+        'user_id',
         'username',
         'name',
         'alamat',
@@ -36,7 +36,7 @@ class UserProfile extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $model->uuid = Str::uuid();
+            $model->id = Str::uuid();
         });
     }
 }

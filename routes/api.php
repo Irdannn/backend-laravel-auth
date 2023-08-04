@@ -27,17 +27,17 @@ Route::group(['middleware' => 'api', 'prefix'=> 'auth'], function($router){
 });
 
 Route::group(['middleware' => 'api', 'prefix'=> 'user'], function($router){
-    Route::get('/show/{uuid}', [UserProfileController::class, 'show']);
+    Route::get('/show/{id}', [UserProfileController::class, 'show']);
     Route::get('/index', [UserProfileController::class, 'index']);
-    Route::put('/update/{uuid}', [UserProfileController::class, 'update']);
-    Route::delete('/destroy/{uuid}', [UserProfileController::class, 'destroy']);
+    Route::put('/update/{id}', [UserProfileController::class, 'update']);
+    Route::delete('/destroy/{id}', [UserProfileController::class, 'destroy']);
 });
 
 Route::group(['middleware' => 'api', 'prefix'=> 'foto'], function($router){
     Route::post('/create',[AvatarController::class,'create']);
     Route::get('/get',[AvatarController::class,'get']);
-    Route::get('/show/{uuid}/image',[AvatarController::class,'show']);
-    Route::patch('/edit/{uuid}',[AvatarController::class,'edit']);
-    Route::put('/update/{uuid}',[AvatarController::class,'update']);
-    Route::delete('/delete/{uuid}',[AvatarController::class,'delete']);
+    Route::get('/show/{id}/image',[AvatarController::class,'show']);
+    Route::patch('/edit/{id}',[AvatarController::class,'edit']);
+    Route::put('/update/{id}',[AvatarController::class,'update']);
+    Route::delete('/delete/{id}',[AvatarController::class,'delete']);
 });

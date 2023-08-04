@@ -13,7 +13,7 @@ use App\Traits\UUID;
 
 class User extends Authenticatable implements JWTSubject
 {
-    protected $primaryKey = 'uuid';
+    protected $primaryKey = 'id';
     public $incrementing = false; // Set to false to indicate that the primary key is not auto-incrementing
 
     use HasApiTokens, HasFactory, Notifiable;
@@ -62,7 +62,7 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::creating(function ($model) {
-            $model->uuid = Str::uuid();
+            $model->id = Str::uuid();
         });
 
         self::created(function ($user) {

@@ -14,15 +14,15 @@ class UserProfileController extends Controller
         $userProfile = UserProfile::all()->toArray();
        return $userProfile;
     }
-    public function show($user_uuid)
+    public function show($id)
     {
-        return UserProfile::find($user_uuid);
+        return UserProfile::find($id);
     }
 
-    public function update(Request $request, $uuid)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'user_uuid' => 'required',
+            'user_id' => 'required',
             'username' => 'required',
             'name' => 'required',
             'alamat' => 'nullable',
@@ -37,12 +37,12 @@ class UserProfileController extends Controller
             'bio' => 'nullable'
         ]);
 
-        $userProfile = UserProfile::find($uuid);
+        $userProfile = UserProfile::find($id);
         if (!$userProfile) {
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        $userProfile->user_uuid = $request->input('user_uuid');
+        $userProfile->user_id = $request->input('user_id');
         $userProfile->username = $request->input('username');
         $userProfile->name = $request->input('name');
         $userProfile->alamat = $request->input('alamat');
@@ -57,8 +57,8 @@ class UserProfileController extends Controller
         $userProfile->bio = $request->input('bio');
         $userProfile->save();
 
-        if ($request->has('user_uuid')) {
-            $user = User::find($request->input('user_uuid'));
+        if ($request->has('user_id')) {
+            $user = User::find($request->input('user_id'));
             $user->update(['username' => $request->input('username')]);
             $user->update(['name' => $request->input('name')]);
             $user->update(['role' => $request->input('role')]);
@@ -67,9 +67,9 @@ class UserProfileController extends Controller
         return $userProfile;
     }
 
-    public function destroy($uuid)
+    public function destroy($id)
     {
-        $userProfile = UserProfile::find($uuid);
+        $userProfile = UserProfile::find($id);
         if (!$userProfile) {
             return response()->json(['message' => 'User  Profile Tidak ditemukan'], 404);
         }
