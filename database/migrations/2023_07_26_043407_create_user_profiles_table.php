@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_profiles', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->uuid('uuid')->primary();
+            $table->char('user_id');
+            $table->foreign('user_id')->references('uuid')->on('users');
             $table->string('username')->unique();
             $table->string('name')->nullable();
             $table->string('alamat')->nullable();

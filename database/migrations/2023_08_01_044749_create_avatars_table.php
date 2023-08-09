@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('foto_profiles', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->string('image_path');
+        Schema::create('avatars', function (Blueprint $table) {
+            $table->uuid('uuid')->primary();
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('uuid')->on('users');
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('foto_profiles');
+        Schema::dropIfExists('avatars');
     }
 };
