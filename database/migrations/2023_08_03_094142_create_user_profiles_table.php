@@ -15,6 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->char('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->char('avatarId');
+            $table->foreign('avatarId')->references('id')->on('avatars');
             $table->string('username')->unique();
             $table->string('name')->nullable();
             $table->string('alamat')->nullable();

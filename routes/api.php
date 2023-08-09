@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\PictureController;
 
 
 /*
@@ -42,4 +43,13 @@ Route::group(['middleware' => 'api', 'prefix'=> 'foto'], function($router){
     Route::patch('/edit/{id}',[AvatarController::class,'edit']);
     Route::put('/update/{id}',[AvatarController::class,'update']);
     Route::delete('/delete/{id}',[AvatarController::class,'delete']);
+});
+
+Route::group(['middleware' => 'api', 'prefix'=> 'foto1'], function($router){
+    Route::post('/store',[PictureController::class,'store']);
+    Route::get('/index',[PictureController::class,'index']);
+    Route::get('/show/{id}/avatar',[PictureController::class,'show']);
+    Route::patch('/edit/{id}',[PictureController::class,'edit']);
+    Route::put('/update/{id}',[PictureController::class,'update']);
+    Route::delete('/delete/{id}',[PictureController::class,'delete']);
 });
