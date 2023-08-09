@@ -20,12 +20,12 @@ class Avatar extends Model
 
     public function profile()
     {
-        return $this->hasOne(UserProfile::class);
+        return $this->hasOne(Profile::class);
     }
 
     public function userProfile()
     {
-        return $this->hasMany(UserProfile::class, 'avatar_id', 'id');
+        return $this->hasMany(Profile::class, 'avatar_id', 'id');
     }
 
     protected static function boot()

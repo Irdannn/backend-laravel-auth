@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_profiles', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->char('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->char('avatarId');
-            $table->foreign('avatarId')->references('id')->on('avatars');
+            $table->char('avatar_id')->nullable();
+            $table->foreign('avatar_id')->references('id')->on('avatars');
             $table->string('username')->unique();
             $table->string('name')->nullable();
             $table->string('alamat')->nullable();
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_profiles');
+        Schema::dropIfExists('profiles');
     }
 };

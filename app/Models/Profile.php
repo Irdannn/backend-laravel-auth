@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class UserProfile extends Model
+class Profile extends Model
 {
     protected $primaryKey = 'id';
     public $incrementing = false; // Set to false to indicate that the primary key is not auto-incrementing

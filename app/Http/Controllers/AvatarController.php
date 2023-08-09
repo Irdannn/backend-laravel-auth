@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Avatar;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,7 @@ class AvatarController extends Controller
         $avatars->user_id=$request->user_id;
         $avatars->avatar=$filename;
         $result=$avatars->save();
+
         if($result){
             return response()->json(['success'=>true]);
         }else{
