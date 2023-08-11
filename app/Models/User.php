@@ -83,5 +83,14 @@ class User extends Authenticatable implements JWTSubject
                 'role' => $user->role
             ]);
         });
+
+        static::deleting(function(User $user) { // before delete() method call this
+            $user->profile()->delete();
+            $user->avatar()->delete();
+            // do the rest of the cleanup...
+       });
+
     }
+
+
 }

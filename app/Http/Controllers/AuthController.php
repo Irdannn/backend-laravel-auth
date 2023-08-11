@@ -92,4 +92,35 @@ class AuthController extends Controller
             'message'=>'User Logout'
         ]);
     }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'User  Profile Tidak ditemukan'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'User Dihapus']);
+    }
+
+    // public function destroy($id)
+    // {
+    //     try {
+    //         // Find the user by ID along with their avatars
+    //         $user = User::with('avatars')->findOrFail($id);
+
+    //         // Delete the avatars associated with the user
+    //         // $user->avatar->each->delete();
+    //         $user->profile->each->delete();
+
+    //         // Delete the user
+    //         $user->delete();
+
+    //         return response()->json(['message' => 'User and associated avatars deleted successfully']);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => 'An error occurred'], 500);
+    //     }
+    // }
 }
