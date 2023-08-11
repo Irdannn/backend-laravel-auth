@@ -3,25 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UserProfile;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 
-
-class UserProfileController extends Controller
+class ProfileController extends Controller
 {
     public function index()
     {
-        $userProfile = UserProfile::all()->toArray();
+        $userProfile = Profile::all()->toArray();
        return $userProfile;
     }
     public function show($id)
     {
-        return UserProfile::find($id);
+        return Profile::find($id);
     }
 
     public function showUser($user_id){
         $user = User::find($user_id);
-        $userProfile = $user->userProfile[0];
+        $userProfile = $user->Profile;
 
         return $userProfile;
     }
@@ -44,7 +43,7 @@ class UserProfileController extends Controller
             'bio' => 'nullable'
         ]);
 
-        $userProfile = UserProfile::find($id);
+        $userProfile = Profile::find($id);
         if (!$userProfile) {
             return response()->json(['message' => 'User not found'], 404);
         }
@@ -76,7 +75,7 @@ class UserProfileController extends Controller
 
     public function destroy($id)
     {
-        $userProfile = UserProfile::find($id);
+        $userProfile = Profile::find($id);
         if (!$userProfile) {
             return response()->json(['message' => 'User  Profile Tidak ditemukan'], 404);
         }

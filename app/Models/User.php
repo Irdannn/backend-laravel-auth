@@ -53,12 +53,17 @@ class User extends Authenticatable implements JWTSubject
     // Define the relationship with the UserProfile model
     public function profile()
     {
-        return $this->hasOne(UserProfile::class);
+        return $this->hasOne(Profile::class);
+    }
+
+    public function avatar()
+    {
+        return $this->hasOne(Avatar::class);
     }
 
     public function userProfile()
     {
-        return $this->hasMany(UserProfile::class, 'user_id', 'id');
+        return $this->hasMany(Profile::class, 'avatar_id', 'id');
     }
 
     // Method to create a user profile when a user is registered

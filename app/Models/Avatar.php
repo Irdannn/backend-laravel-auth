@@ -18,6 +18,16 @@ class Avatar extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function userProfile()
+    {
+        return $this->hasMany(Profile::class, 'avatar_id', 'id');
+    }
+
     protected static function boot()
     {
         parent::boot();
