@@ -36,7 +36,7 @@ Route::group(['middleware' => 'api', 'prefix'=> 'user'], function($router){
 
 Route::group(['middleware' => 'api', 'prefix'=> 'foto'], function($router){
     Route::post('/create',[AvatarController::class,'create']);
-    Route::get('/get',[AvatarController::class,'get']);
+    Route::get('/get/{user_id}',[AvatarController::class,'get']);
     Route::get('/show/{id}/avatar',[AvatarController::class,'show']);
     Route::patch('/edit/{id}',[AvatarController::class,'edit']);
     Route::put('/update/{id}',[AvatarController::class,'update']);

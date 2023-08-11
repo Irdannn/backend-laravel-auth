@@ -30,6 +30,11 @@ class AvatarController extends Controller
         $avatars->avatar=$filename;
         $result=$avatars->save();
 
+        // if ($request->has('user_id')) {
+        //     $user = Profile::find($request->input('user_id'));
+        //     $user->update(['id' => $request->input('avatar_id')]);
+        // }
+
         if($result){
             return response()->json(['success'=>true]);
         }else{
@@ -53,11 +58,36 @@ class AvatarController extends Controller
     return response()->json(['error' => 'Picture not found'], 404);
     }
 
-    public function get()
-    {
-        $avatars=Avatar::orderBy('id','DESC')->get();
-        return response()->json($avatars);
-    }
+    // public function get()
+    // {
+    //     $avatars = Avatar::orderBy('created_at', 'asc')->get();
+    //     return response()->json($avatars[0]["id"]);
+    // }
+
+    // public function get(Request $request, $user_id)
+    // {
+    //     $avatars = Avatar::where('user_id', $user_id)->get();
+    //     // return response()->json($avatars);
+    //     return $avatars[0];
+    // }
+
+    public function get(Request $request, $user_id)
+{
+    $newestAvatar = Avatar::where('user_id', $user_id)
+                          ->orderBy('created_at', 'desc')
+                          ->first();
+    
+    return $newestAvatar;
+}
+
+    
+
+    // public function tempat(Request $request, $tempat)
+    // {
+    //     $inventory = inventory::where('tempat', $tempat)->get();
+
+    //     return $inventory;
+    // }
 
     public function update(Request $request, $id)
     {
